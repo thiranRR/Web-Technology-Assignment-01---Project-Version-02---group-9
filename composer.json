@@ -1,0 +1,39 @@
+{
+    "name": "navis/lostfound-api",
+    "description": "Backend API for Lost and Found project",
+    "type": "project",
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0",
+        "laravel/sanctum": "^3.2"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.21",
+        "phpunit/phpunit": "^10.0",
+        "mockery/mockery": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -10,42 +10,26 @@ class FacultyMember extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $primaryKey = 'faculty_id';
-    // incrementing true by default (bigIncrements)
     protected $fillable = [
+        'user_id',         // FK to users.id
         'full_name',
         'email',
         'password',
-        'profile_picture',
+        'profile_picture', // optional avatar
         'department',
         'bio',
     ];
 
     protected $hidden = [
         'password',
+        'remember_token'
     ];
 
-    protected $casts = [
-        'faculty_id' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    // Relationships
-    public function researchProjects()
+    /**
+     * Each faculty member belongs to a user
+     */
+    public function user()
     {
-        return $this->hasMany(ResearchProject::class, 'faculty_id', 'faculty_id');
-    }
-
-    // Messages sent by this faculty (sender_id stores faculty_id as string)
-    public function messagesSent()
-    {
-        return $this->hasMany(Message::class, 'sender_id', 'faculty_id');
-    }
-
-    // Messages received by this faculty (receiver_id stores faculty_id as string)
-    public function messagesReceived()
-    {
-        return $this->hasMany(Message::class, 'receiver_id', 'faculty_id');
+        return $this->belongsTo(User::class);
     }
 }

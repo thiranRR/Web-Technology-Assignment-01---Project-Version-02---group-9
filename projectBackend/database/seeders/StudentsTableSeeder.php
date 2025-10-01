@@ -4,32 +4,49 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Student;
+use App\Models\User;
+use App\Models\StudentProfile;
 
 class StudentsTableSeeder extends Seeder
 {
     public function run(): void
     {
-        Student::create([
-            'student_id' => 'S001',
-            'full_name' => 'Alice Johnson',
-            'email' => 'alice@example.com',
-            'password' => Hash::make('password123'),
-            'faculty' => 'Engineering',
-            'academic_year' => 2,
-            'skills' => 'PHP, Laravel, React',
-            'interests' => 'AI, Web Development'
-        ]);
+        $students = [
+            [
+                'name' => 'Alice Johnson',
+                'email' => 'alice@example.com',
+                'password' => 'password123',
+                'degree' => 'BSc Engineering',
+                'year' => 2,
+                'skills' => 'PHP, Laravel, React',
+                'github_link' => 'https://github.com/alice',
+            ],
+            [
+                'name' => 'Bob Smith',
+                'email' => 'bob@example.com',
+                'password' => 'password123',
+                'degree' => 'BSc Science',
+                'year' => 3,
+                'skills' => 'Python, Data Science',
+                'github_link' => 'https://github.com/bob',
+            ],
+        ];
 
-        Student::create([
-            'student_id' => 'S002',
-            'full_name' => 'Bob Smith',
-            'email' => 'bob@example.com',
-            'password' => Hash::make('password123'),
-            'faculty' => 'Science',
-            'academic_year' => 3,
-            'skills' => 'Python, Data Science',
-            'interests' => 'Machine Learning, Research'
-        ]);
+        foreach ($students as $s) {
+            $user = User::create([
+                'name' => $s['name'],
+                'email' => $s['email'],
+                'password' => Hash::make($s['password']),
+                'role' => 'student',
+            ]);
+
+            StudentProfile::create([
+                'user_id' => $user->id,
+                'degree' => $s['degree'],
+                'year' => $s['year'],
+                'skills' => $s['skills'] ?? null,
+                'github_link' => $s['github_link'] ?? null,
+            ]);
+        }
     }
 }

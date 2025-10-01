@@ -3,59 +3,32 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable; // for auth usage
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class Student extends Authenticatable
+class StudentProfile extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    protected $primaryKey = 'student_id';
-    public $incrementing = false; // varchar PK
-    protected $keyType = 'string';
-
+    // Fillable fields
     protected $fillable = [
-        'student_id',
-        'full_name',
-        'email',
-        'password',
-        'profile_picture',
-        'faculty',
-        'academic_year',
-        'skills',
-        'interests',
+        'user_id',       // links to users.id
+        'degree',        // student degree
+        'year',          // academic year
+        'skills',        // comma-separated or JSON
+        'github_link',   // optional GitHub URL
     ];
 
-    protected $hidden = [
-        'password',
-    ];
-
-    protected $casts = [
-        'academic_year' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    // Relationships
-    public function applications()
+    /**
+     * Each student profile belongs to a single user
+     */
+    public function user()
     {
-        return $this->hasMany(Application::class, 'student_id', 'student_id');
+        return $this->belongsTo(User::class);
     }
 
-    public function projects()
-    {
-        return $this->hasMany(Project::class, 'student_id', 'student_id');
-    }
-
-    // Messages sent by this student (sender_id stores student_id)
-    public function messagesSent()
-    {
-        return $this->hasMany(Message::class, 'sender_id', 'student_id');
-    }
-
-    // Messages received by this student (receiver_id stores student_id)
-    public function messagesReceived()
-    {
-        return $this->hasMany(Message::class, 'receiver_id', 'student_id');
-    }
+    /**
+     * Optionally: define relationship to projects/applications/messages if needed
+     */
+    // public function applications() { ... }
+    // public function projects() { ... }
 }
