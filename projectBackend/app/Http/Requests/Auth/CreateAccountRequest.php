@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -47,11 +47,11 @@ class CreateAccountRequest extends FormRequest
             'email.unique' => 'This Email Address is already registered.',
 
             'student_id.required' => 'Student ID is required.',
-            'student_id.regex' => 'Student ID must start with FC followed by 6 digits (e.g., FC123456).',
+            'student_id.regex' => 'Student ID format is invalid..',
             'student_id.unique' => 'This Student ID is already registered.',
 
             'academic_year.required' => 'Academic Year is required.',
-            'academic_year.regex' => 'Academic Year must be in the format YYYY/YYYY (e.g., 2024/2025).',
+            'academic_year.regex' => 'Academic Year format is invalid.',
 
             'faculty_name.required' => 'Faculty Name is required.',
             'faculty_name.max' => 'Faculty Name cannot exceed 255 characters.',

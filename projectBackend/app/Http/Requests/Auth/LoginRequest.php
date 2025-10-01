@@ -19,16 +19,35 @@ class LoginRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
+        $loginType = $this->input('login_type'); // should be 'student' or 'lecturer'
+
+        if ($loginType === 'student') {
+            return [
+                'user_id' => ['required', 'regex:/^stu\d{6}$/'],
+                'pwd'     => ['required', 'string'],
+            ];
+        } elseif ($loginType === 'lecturer') {
+            return [
+                'user_id' => ['required', 'regex:/^lec\d{6}$/'],
+                'pwd'     => ['required', 'string'],
+            ];
+        }
+
+        // fallback if login_type missing
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'user_id' => ['required', 'string'],
+            'pwd'     => ['required', 'string'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+          'user_id.required' => 'User ID is required.',
+          'user_id.regex'    => 'The User ID format is invalid.',
+          'pwd.required'     => 'Password is required.',
         ];
     }
 
@@ -42,13 +61,15 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         /** @var User|null $user */
-        $user = Auth::getProvider()->retrieveByCredentials($this->only('email', 'password'));
+        $user = Auth::getProvider()->retrieveByCredentials(
+            $this->only('user_id', 'pwd')
+        );
 
-        if (! $user || ! Auth::getProvider()->validateCredentials($user, $this->only('password'))) {
+        if (! $user || ! Auth::getProvider()->validateCredentials($user, $this->only('pwd'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'user_id' => __('auth.failed'),
             ]);
         }
 
@@ -73,7 +94,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
+            'user_id' => __('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -85,7 +106,7 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return $this->string('email')
+        return $this->string('user_id')
             ->lower()
             ->append('|'.$this->ip())
             ->transliterate()
