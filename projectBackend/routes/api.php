@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\FacultyMemberController;
 use App\Http\Controllers\Api\StudentProfileController;
 use App\Http\Controllers\Api\FacultyMemberProfileController;
 
@@ -27,4 +29,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::get('faculty-members/{id}', [FacultyMemberProfileController::class, 'show']);
     Route::put('faculty-members/{id}', [FacultyMemberProfileController::class, 'update']);
     Route::post('faculty-members/{id}/avatar', [FacultyMemberProfileController::class, 'uploadAvatar']);
+
+    Route::get('/students', [StudentController::class, 'index']);
+Route::get('/faculty-members', [FacultyMemberController::class, 'index']);
 });
