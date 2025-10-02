@@ -12,7 +12,7 @@ class LogingController extends Controller
     // Login form
     public function showLoginForm()
     {
-        return view('auth.login');
+        return Inertia::render('Auth/Login');
     }
 
     // Handle login
@@ -34,7 +34,7 @@ class LogingController extends Controller
         ]);
     }
 
-    // Handle logout
+    // logout
     public function logout(Request $request)
     {
         Auth::logout();
