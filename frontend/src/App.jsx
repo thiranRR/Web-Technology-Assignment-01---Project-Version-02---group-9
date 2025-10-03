@@ -7,6 +7,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Footer from './components/Footer';
+import ResearchContent from './components/ResearchContent';
+import ReviewResearch from './components/ReviewResearch';
 
 function App() {
   useEffect(() => {
@@ -37,6 +39,20 @@ function App() {
       <div className="video-overlay"></div>
     </div>
   );
+
+  return (
+    <Router>
+      <div className="App">
+        <Preloader />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/research-content" element={<ResearchContent />} />
+          <Route path="/review-research" element={<ReviewResearch />} />
+        </Routes>
+      </div>
+    </Router>
+  )
+
 }
 
 export default App;
