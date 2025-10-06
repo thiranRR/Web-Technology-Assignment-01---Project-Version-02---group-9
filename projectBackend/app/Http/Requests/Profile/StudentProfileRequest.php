@@ -18,20 +18,10 @@ class StudentProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // Student can optionally update first name & last name; must be a string of max 100 characters
-            'first_name'    => 'sometimes|string|max:100',
-            'last_name'     => 'sometimes|string|max:100',
-
-            // Email is optional, must be valid, max 150 chars, and unique except for the current user
-            'email'         => 'sometimes|email|max:150|unique:users,email,' . auth()->id(),
-
-            // Skills, optional, but if provided must be text up to 500 characters
+            'degree'        => 'sometimes|string|max:100',
+            'year'          => 'sometimes|integer|min:1|max:5',
             'skills'        => 'nullable|string|max:500',
-
-            // GitHub link, optional, must be a valid URL, max length 255 chars
             'github_link'   => 'nullable|url|max:255',
-
-            // LinkedIn link, optional, must be a valid URL, max length 255 chars
             'linkedin_link' => 'nullable|url|max:255',
         ];
     }
@@ -45,13 +35,13 @@ class StudentProfileRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'first_name.max'        => 'First name cannot exceed 100 characters.',
-            'last_name.max'         => 'Last name cannot exceed 100 characters.',
-            'email.email'           => 'Email must be valid.',
-            'email.unique'          => 'This email is already taken.',
-            'skills.max'            => 'Skills cannot exceed 500 characters.',
-            'github_link.url'       => 'GitHub link must be a valid URL.',
-            'linkedin_link.url'     => 'LinkedIn link must be a valid URL.',
+            'degree.max'         => 'Degree cannot exceed 100 characters.',
+            'year.integer'       => 'Year must be a valid number.',
+            'year.min'           => 'Year must be at least 1.',
+            'year.max'           => 'Year cannot exceed 5.',
+            'skills.max'         => 'Skills cannot exceed 500 characters.',
+            'github_link.url'    => 'GitHub link must be a valid URL.',
+            'linkedin_link.url'  => 'LinkedIn link must be a valid URL.',
         ];
     }
 }
