@@ -13,6 +13,7 @@ import LoginPage from "./components/LoginPage";
 import LectureDashboard from "./components/LectureDashboard";
 import ResearchContent from "./components/ResearchContent";
 import ReviewResearch from "./components/ReviewResearch";
+import Contactus from "./components/ContactUs.jsx"; // Contact component
 
 // New Components
 import SignUp from "./components/SignUp";
@@ -77,6 +78,9 @@ function App() {
 
           {/* RESEARCH OPPORTUNITIES */}
           <Route path="/research-opportunities" element={<ResearchOpportunities />} />
+
+          {/* CONTACT PAGE */}
+          <Route path="/contact" element={<Contactus />} />
         </Routes>
       </div>
     </Router>
