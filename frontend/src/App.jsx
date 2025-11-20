@@ -66,6 +66,20 @@ function App() {
       </Router>
     </div>
   );
+
+  return (
+    <Router>
+      <div className="App">
+        <Preloader />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/research-content" element={<ResearchContent />} />
+          <Route path="/review-research" element={<ReviewResearch />} />
+        </Routes>
+      </div>
+    </Router>
+  )
+
 }
 
 export default App;
