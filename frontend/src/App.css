@@ -408,3 +408,16 @@ footer {
     height: 120px;
   }
 }
+
+/* Ensure content appears above video */
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+ 
+/* Ensure App container has proper sizing */
+.App {
+  position: relative;
+  min-height: 100vh;
+}
