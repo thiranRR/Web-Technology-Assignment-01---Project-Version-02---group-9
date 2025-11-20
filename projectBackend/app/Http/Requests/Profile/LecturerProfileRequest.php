@@ -26,7 +26,7 @@ class LecturerProfileRequest extends FormRequest
             'designation'    => 'sometimes|string|max:100',   
             'department'     => 'sometimes|string|max:100',   
             'research_areas' => 'sometimes|string|max:500',   
-            'contact_email'  => 'sometimes|email|max:150|unique:users,email,' . auth()->id(), 
+            'contact_email'  => 'sometimes|email|max:150|unique:lecturer_profiles,contact_email,' . auth()->id() . ',user_id',
         ];
     }
 
