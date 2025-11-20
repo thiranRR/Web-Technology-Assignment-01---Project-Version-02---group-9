@@ -1,6 +1,6 @@
- import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Components
 import Preloader from './components/Preloader';
@@ -16,9 +16,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       const preloader = document.querySelector('.preloader');
-      if (preloader) {
-        preloader.style.display = 'none';
-      }
+      if (preloader) preloader.style.display = 'none';
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -27,7 +25,7 @@ function App() {
   return (
     <div className="App">
       <Preloader />
-      
+
       <Router>
         {/* Video Background */}
         <video className="video-background" autoPlay muted loop>
@@ -36,27 +34,35 @@ function App() {
         </video>
         <div className="video-overlay"></div>
 
-        <Switch>
+        <Routes>
           {/* Home Route */}
-          <Route exact path="/">
-            <Navbar />
-            <Hero />
-            <About />
-            <Footer />
-          </Route>
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <Hero />
+                <About />
+                <Footer />
+              </>
+            }
+          />
 
           {/* Login Route */}
-          <Route path="/LoginPage">
-            <LoginPage />
-          </Route>
+          <Route path="/LoginPage" element={<LoginPage />} />
 
           {/* Dashboard Route */}
-          <Route path="/LectureDashboard">
-            <NavBarAfter />
-            <LectureDashboard />
-            <Footer />
-          </Route>
-        </Switch>
+          <Route
+            path="/LectureDashboard"
+            element={
+              <>
+                <NavBarAfter />
+                <LectureDashboard />
+                <Footer />
+              </>
+            }
+          />
+        </Routes>
       </Router>
     </div>
   );
