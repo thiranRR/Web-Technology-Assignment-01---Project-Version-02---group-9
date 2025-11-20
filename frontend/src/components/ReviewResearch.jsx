@@ -1,5 +1,8 @@
 import React from 'react';
-import '../styles/ReviewResearch.css';
+import "../styles/ReviewResearch.css";
+
+
+
 
 const ReviewResearch = () => {
   const researches = [
