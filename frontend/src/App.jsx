@@ -19,9 +19,16 @@ function App() {
       if (preloader) preloader.style.display = 'none';
     }, 3000);
 
-    return () => clearTimeout(timer);
-  }, []);
+// Components
+import Preloader from "./components/Preloader"
+import Navbar from "./components/Navbar"
+import Hero from "./components/Hero"
+import About from "./components/About"
+import Footer from "./components/Footer"
+import SignUp from "./components/SignUp"
+import ResearchOpportunities from "./components/ResearchOpportunities"
 
+function HomePage() {
   return (
     <div className="App">
       <Preloader />
